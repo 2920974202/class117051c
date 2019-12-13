@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="good in goodList" v-bind:key="good.goodName">
+                <span>{{good.goodName}}</span>
+                --<span>{{good.price}}</span>
+                --<span><input type="number" v-model="good.count"></span>
+                --<span>{{good.price*good.count}}元</span>
+
+            </li>
+        </ul>
+        <h2>总价：{{totalPrice}}</h2>
+      
+  
+    </div>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                goodList:[ 
+                     {goodName:"高达",price:1999,count:2},
+                     {goodName:"爱丽丝",price:199,count:1},
+                     {goodName:"艾斯德斯",price:200,count:1},
+                     {goodName:"歼-20",price:1500000000,count:1}
+                
+                ],
+                totalPrice:0
+        
+                   },
+                   watch:{
+                       goodList:{
+                           deep:true,
+                           handler:function(newVal){
+                               //newVal实际上指向了跟新后的goodList
+                               var result=0;
+                               newVal.forEach(function(good,index){
+                                   //good代表数组迭代出来的每一个个good元素，index是她的数组索引
+                                   result+=good.price*good.count;
+                               })
+                               this.totalPrice = result;
+                               
+                           }
+                       }
+                   }
+                 
+                 // computed:{
+                    // totalPrice: function(){
+                       //  var result =0;
+               //for(var i=0;i<this.goodList.length;i++){
+                             //result+= this.goodList[i].price*this.goodList[i].count;
+                        // }
+                        // result
+
+
+                     // }
+
+                  //}
+        })
+           
+    </script>
+    
+</body>
+</html>
